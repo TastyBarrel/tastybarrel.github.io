@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Alderson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary:    #161410;
+      --bg-deep:       #0e0c0a;
+      --bg-card:       #1a1814;
+      --silver:        #c0c0c0;
+      --silver-muted:  #909090;
+      --silver-dim:    #585858;
+      --gold:          #c9a84c;
+      --gold-dim:      #6a5520;
+      --gold-faint:    #2a2010;
+      --border:        #2a2418;
+      --border-light:  #1e1a10;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--silver);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 18px 40px;
+      background: rgba(10, 8, 6, 0.92);
+      border-bottom: 0.5px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--silver-muted);
+      text-decoration: none;
+      transition: color 0.35s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { transform: scaleX(1); }
+
+    nav .external::after { content: ' ↗'; font-size: 8px; position: static; height: auto; background: none; transform: none; }
+    nav .external:hover::after { transform: none; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s ease forwards 0.3s;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .deco-bar {
+      display: flex;
+      gap: 3px;
+      width: 260px;
+      height: 3px;
+      margin: 0 auto 36px;
+    }
+    .deco-bar span { display: block; height: 100%; }
+
+    .deco-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .deco-line {
+      width: 100px;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .deco-line.r { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+    .deco-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .deco-diamond.sm {
+      width: 3px; height: 3px;
+      opacity: 0.5;
+    }
+
+    .hero-name {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(42px, 7vw, 72px);
+      color: var(--silver);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      transition: color 0.4s ease;
+      cursor: default;
+      margin-bottom: 0;
+    }
+
+    .hero-name:hover { color: var(--gold); }
+
+    .hero-tagline {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-top: 16px;
+    }
+
+    .deco-ornament-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* ── PHOTO ── */
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      padding: 60px 40px 0;
+      background: var(--bg-primary);
+    }
+
+    .photo-frame {
+      width: 200px;
+      height: 260px;
+      border: 0.5px solid var(--border);
+      border-top: 3px solid var(--gold);
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .photo-frame::before,
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      border-color: var(--gold-dim);
+      border-style: solid;
+    }
+    .photo-frame::before { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+    .photo-frame::after  { bottom: -1px; left:  -1px; border-width: 0 0 1px 1px; }
+
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-placeholder {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+      line-height: 2;
+    }
+
+    /* ── INTRO ── */
+    .intro-section {
+      padding: 60px 40px 60px;
+      background: var(--bg-primary);
+      text-align: center;
+      border-bottom: 0.5px solid var(--border-light);
+    }
+
+    .intro-section blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--silver-muted);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE CARDS ── */
+    .cards-section {
+      padding: 60px 40px;
+      background: var(--bg-deep);
+    }
+
+    .cards-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-top: 2px solid var(--border);
+      padding: 28px 24px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.35s ease, border-top-color 0.35s ease, background 0.35s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 0;
+      background: var(--gold-faint);
+      transition: height 0.35s ease;
+    }
+
+    .card:hover {
+      border-top-color: var(--gold);
+      border-color: var(--gold-dim);
+      background: #1c1a12;
+    }
+
+    .card:hover::after { height: 2px; }
+    .card:hover .card-title { color: var(--gold); }
+    .card:hover .card-arrow { color: var(--gold); transform: translateX(4px); }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--silver-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      transition: color 0.35s ease;
+    }
+
+    .card-sub {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--silver-dim);
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card-arrow {
+      font-size: 10px;
+      color: var(--gold-dim);
+      letter-spacing: 0.12em;
+      transition: color 0.35s ease, transform 0.35s ease;
+      display: inline-block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 40px;
+      background: var(--bg-deep);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-deco {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-line {
+      width: 40px; height: 0.5px;
+      background: var(--border);
+    }
+
+    footer p {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--gold-dim);
+    }
+
+    footer a {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      text-decoration: none;
+      transition: color 0.35s ease;
+    }
+
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="about.html">About Me</a>
+    <a href="background.html">Background</a>
+    <a href="projects.html">Art &amp; Projects</a>
+    <a href="https://sovereigngrid.org" target="_blank" rel="noopener" class="external">Sovereign Grid</a>
+    <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener" class="external">LinkedIn</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="deco-bar">
+        <span style="background:var(--gold);flex:3"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:1"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:3"></span>
+      </div>
+
+      <div class="deco-ornament">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+
+      <h1 class="hero-name">Paul Alderson</h1>
+      <p class="hero-tagline">Steward &middot; Builder &middot; Honest Actor</p>
+
+      <div class="deco-ornament-bottom">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="photo-section">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        Your photo<br>goes here<br><br>
+        Replace this div<br>with an &lt;img&gt; tag
+      </div>
+    </div>
+  </div>
+
+  <section class="intro-section">
+    <blockquote>
+      I care about the world I live in — about fairness, about honesty,
+      about the gap between what is and what could be. I make things
+      with my hands and with my mind. I build toward something that will last.
+      I try, as often as I can, to tell the truth.
+    </blockquote>
+  </section>
+
+  <section class="cards-section">
+    <p class="cards-label">Explore</p>
+    <div class="cards-grid">
+      <a class="card" href="about.html">
+        <div class="card-title">About Me</div>
+        <div class="card-sub">Who I am beyond the work — values, beliefs, and what drives me forward.</div>
+        <span class="card-arrow">Enter &rarr;</span>
+      </a>
+      <a class="card" href="background.html">
+        <div class="card-title">Background</div>
+        <div class="card-sub">How I got here — the thread connecting everything I've done and learned.</div>
+        <span class="card-arrow">Enter &rarr;</span>
+      </a>
+      <a class="card" href="projects.html">
+        <div class="card-title">Art &amp; Projects</div>
+        <div class="card-sub">What I make — leather, wood, paint, canvas, and everything in between.</div>
+        <span class="card-arrow">Enter &rarr;</span>
+      </a>
+      <a class="card" href="https://sovereigngrid.org" target="_blank" rel="noopener">
+        <div class="card-title">Sovereign Grid</div>
+        <div class="card-sub">A community-led energy initiative built from the ground up.</div>
+        <span class="card-arrow">Visit &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+    <p>&copy; Paul Alderson 2026</p>
+    <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+  </footer>
+
+</body>
+</html>
