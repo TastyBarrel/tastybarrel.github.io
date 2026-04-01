@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background — Paul Alderson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary:   #161410;
+      --bg-deep:      #0e0c0a;
+      --bg-card:      #1a1814;
+      --silver:       #c0c0c0;
+      --silver-muted: #909090;
+      --silver-dim:   #585858;
+      --gold:         #c9a84c;
+      --gold-dim:     #6a5520;
+      --gold-faint:   #2a2010;
+      --border:       #2a2418;
+      --border-light: #1e1a10;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--silver);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 18px 40px;
+      background: rgba(10, 8, 6, 0.92);
+      border-bottom: 0.5px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--silver-muted);
+      text-decoration: none;
+      transition: color 0.35s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { transform: scaleX(1); }
+    nav a.active { color: var(--gold); }
+    nav a.active::after { transform: scaleX(1); }
+
+    nav .external::after { content: ''; }
+    nav .external:hover { color: var(--gold); }
+    nav .external:hover::after { transform: scaleX(1); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 110px 40px 56px;
+      background: var(--bg-primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 1s ease forwards 0.2s;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .deco-bar {
+      display: flex;
+      gap: 3px;
+      width: 200px;
+      height: 3px;
+      margin: 0 auto 28px;
+    }
+    .deco-bar span { display: block; height: 100%; }
+
+    .deco-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .deco-line {
+      width: 80px; height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .deco-line.r { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+    .deco-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .deco-diamond.sm { width: 3px; height: 3px; opacity: 0.5; }
+
+    .page-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(52px, 7vw, 72px);
+      color: var(--silver);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .page-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-style: italic;
+      color: var(--gold-dim);
+      letter-spacing: 0.08em;
+    }
+
+    .deco-ornament-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-label {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--silver-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .prose {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--silver-dim);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+    }
+
+    .prose p { margin-bottom: 20px; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── TEXT BLOCKS ── */
+    .text-block {
+      padding: 52px 0;
+      border-bottom: 0.5px solid var(--border-light);
+    }
+
+    .text-block:last-of-type { border-bottom: none; }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 2px solid var(--gold-dim);
+      padding: 4px 0 4px 28px;
+      margin: 28px 0;
+    }
+
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--silver-muted);
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+      margin-bottom: 0;
+    }
+
+    /* ── SKILLS BAND ── */
+    .skills-band {
+      background: var(--bg-deep);
+      margin: 0 -40px;
+      padding: 52px 40px;
+      border-top: 0.5px solid var(--border-light);
+      border-bottom: 0.5px solid var(--border-light);
+    }
+
+    .skills-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-top: 2px solid var(--gold-dim);
+      padding: 28px 24px;
+      transition: border-top-color 0.35s ease;
+    }
+
+    .skill-card:hover { border-top-color: var(--gold); }
+    .skill-card:hover .skill-title { color: var(--gold); }
+
+    .skill-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--silver-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+      transition: color 0.35s ease;
+    }
+
+    .skill-body {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--silver-dim);
+      line-height: 1.85;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 40px;
+      background: var(--bg-deep);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-deco {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-line {
+      width: 40px; height: 0.5px;
+      background: var(--border);
+    }
+
+    footer p {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--gold-dim);
+    }
+
+    footer a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      text-decoration: none;
+      transition: color 0.35s ease;
+    }
+
+    footer a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      nav { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="background.html" class="active">Background</a>
+    <a href="projects.html">Art &amp; Projects</a>
+    <a href="https://sovereigngridinitiative.org" target="_blank" rel="noopener" class="external">Sovereign Grid</a>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener" class="external">LinkedIn</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="deco-bar">
+        <span style="background:var(--gold);flex:3"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:1"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:3"></span>
+      </div>
+      <div class="deco-ornament">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+      <h1 class="page-title">Background</h1>
+      <p class="page-subtitle">How I got here</p>
+      <div class="deco-ornament-bottom">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORIGIN NARRATIVE -->
+  <div style="background: var(--bg-primary);">
+    <div class="content">
+
+      <div class="text-block">
+        <p class="section-label">Origin narrative</p>
+        <h2 class="section-heading">My path hasn't been linear, and I've stopped pretending that's a liability.</h2>
+        <div class="prose">
+          <p>I went into college expecting to end up in IT and technology — but I ran into a fundamental mismatch between how I learn and how that world is taught. I'm a kinesthetic learner. I learn by doing, by feeling my way through a problem until something clicks. Computer Science, as it's taught in most universities, is not designed for people like me, and I spent long enough banging my head against it to know when to redirect.</p>
+          <p>Biology turned out to be a better fit — the lab made sense to me in a way the lecture hall never did. I earned my degree and pointed myself toward research. But the research world had its own problems: universities were phasing out master's programs, flooding the field with underpaid post-docs, and asking people to sign up for twelve-year commitments with uncertain returns. I saw the structure clearly enough to know I didn't want to be inside it, and I left before it could close around me.</p>
+
+          <div class="pull-quote">
+            <p>I saw the structure clearly enough to know I didn't want to be inside it, and I left before it could close around me.</p>
+          </div>
+
+          <p>What followed was a series of experiences that I used to describe as accidental and now understand as formative. A nuclear plant — rigorous, demanding, eye-opening, the kind of place that teaches you exactly how much precision matters when the stakes are high. Pharmaceutical research — a field I entered for one reason and stayed in long enough to learn something entirely different from what I expected. Hydrogen safety — which found me through availability and turned out to have its own kind of depth.</p>
+          <p>What I took from all of it wasn't a tidy career arc. It was something more useful: a finely tuned sense of when something is wrong. Working across organizations in different states of health, I've developed what I can only describe as a sixth sense — a feeling that bypasses the logic centers and tells me when a system is failing before the data confirms it. I've seen what organizational decline looks like from the inside. I've seen what good growth looks like and what bad growth looks like. I've learned to step back, find the neutral vantage point, and see clearly.</p>
+          <p>The first chapter of my career was about figuring out who I am. I've arrived at some conclusions. The second chapter is about bringing all of that to bear — fully, pointedly, without apology.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SKILLS BAND -->
+  <div class="skills-band">
+    <div class="skills-inner">
+      <p class="section-label" style="text-align:center;">What I've learned</p>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-title">Kinesthetic Intelligence</div>
+          <div class="skill-body">I learn by doing. That means the learning takes longer upfront — but what it produces is a sixth sense, a felt knowledge that bypasses assumption and bias. I know when I've arrived at the right answer because I can feel when something is wrong, not just reason through it.</div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-title">Organizational Health</div>
+          <div class="skill-body">I've been inside organizations at every stage — growth, stagnation, decline. I know what a death cycle looks like from the inside. I know what keeps a company from that cycle. I can read the room at an institutional level and I've learned to trust that reading.</div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-title">Systems Thinking</div>
+          <div class="skill-body">Across biology, nuclear operations, pharmaceuticals, and energy safety, the common thread has been learning to see the whole system — how the parts interact, where the failure points hide, and what good design actually looks like when it serves the people inside it.</div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-title">Neutral Vantage Point</div>
+          <div class="skill-body">I've worked hard to develop the ability to remove myself from a situation and see it clearly. Not detachment — engagement without distortion. The ability to see what is actually happening rather than what I want to be happening, or what I'm afraid is happening.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- WHERE I'M HEADED -->
+  <div style="background: var(--bg-primary);">
+    <div class="content">
+      <div class="text-block">
+        <p class="section-label">Where I'm headed</p>
+        <h2 class="section-heading">The second chapter is about bringing everything to bear.</h2>
+        <div class="prose">
+          <p>I spent the first part of my career figuring out who I am and how I work. That work isn't done — it never is — but I've arrived at enough clarity to move forward with intention. I know how I learn. I know what I'm good at. I know the kinds of problems that make me lean forward and the kinds of organizations that bring out the best in me.</p>
+          <p>I'm looking for the kind of work where all of that is useful — where seeing the whole system matters, where honesty is an asset rather than an inconvenience, where building something that lasts is the actual goal. I'm not interested in executing indefinitely. I'm interested in contributing to something worth building.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+    <p>&copy; Paul Alderson 2026</p>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+  </footer>
+
+</body>
+</html>
