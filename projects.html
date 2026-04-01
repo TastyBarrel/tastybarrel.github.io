@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art &amp; Projects — Paul Alderson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary:   #161410;
+      --bg-deep:      #0e0c0a;
+      --bg-card:      #1a1814;
+      --silver:       #c0c0c0;
+      --silver-muted: #909090;
+      --silver-dim:   #585858;
+      --gold:         #c9a84c;
+      --gold-dim:     #6a5520;
+      --gold-faint:   #2a2010;
+      --border:       #2a2418;
+      --border-light: #1e1a10;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--silver);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 18px 40px;
+      background: rgba(10, 8, 6, 0.92);
+      border-bottom: 0.5px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--silver-muted);
+      text-decoration: none;
+      transition: color 0.35s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { transform: scaleX(1); }
+    nav a.active { color: var(--gold); }
+    nav a.active::after { transform: scaleX(1); }
+
+    nav .external::after { content: ''; }
+    nav .external:hover { color: var(--gold); }
+    nav .external:hover::after { transform: scaleX(1); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 110px 40px 56px;
+      background: var(--bg-primary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 1s ease forwards 0.2s;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .deco-bar {
+      display: flex;
+      gap: 3px;
+      width: 200px;
+      height: 3px;
+      margin: 0 auto 28px;
+    }
+    .deco-bar span { display: block; height: 100%; }
+
+    .deco-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .deco-line {
+      width: 80px; height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .deco-line.r { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+    .deco-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .deco-diamond.sm { width: 3px; height: 3px; opacity: 0.5; }
+
+    .page-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(52px, 7vw, 72px);
+      color: var(--silver);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .page-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-style: italic;
+      color: var(--gold-dim);
+      letter-spacing: 0.08em;
+    }
+
+    .deco-ornament-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      padding: 32px 40px;
+      background: var(--bg-deep);
+      border-bottom: 0.5px solid var(--border-light);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      background: transparent;
+      border: 0.5px solid var(--border);
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+
+    .filter-btn.active {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: var(--gold-faint);
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section {
+      padding: 48px 40px 64px;
+      background: var(--bg-primary);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .gallery-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-top: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-top-color 0.35s ease, border-color 0.35s ease;
+      overflow: hidden;
+    }
+
+    .gallery-card:hover {
+      border-top-color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+
+    .gallery-card:hover .card-img-wrap::after {
+      opacity: 1;
+    }
+
+    .gallery-card:hover .card-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-deep);
+    }
+
+    .card-img-wrap::after {
+      content: 'View';
+      position: absolute;
+      inset: 0;
+      background: rgba(14, 12, 10, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .card-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .placeholder-icon {
+      width: 32px;
+      height: 32px;
+      border: 0.5px solid var(--gold-dim);
+      transform: rotate(45deg);
+    }
+
+    .placeholder-text {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      transform: rotate(0deg);
+    }
+
+    .card-info {
+      padding: 16px 18px 20px;
+    }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--silver-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      transition: color 0.35s ease;
+    }
+
+    .gallery-card:hover .card-title { color: var(--gold); }
+
+    .card-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--silver-dim);
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(8, 6, 4, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-inner {
+      max-width: 880px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 0;
+      border: 0.5px solid var(--border);
+      transform: translateY(16px);
+      transition: transform 0.35s ease;
+    }
+
+    .lightbox.open .lightbox-inner {
+      transform: translateY(0);
+    }
+
+    .lightbox-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: var(--bg-deep);
+    }
+
+    .lightbox-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-info {
+      background: var(--bg-card);
+      padding: 32px 28px;
+      border-left: 0.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lightbox-deco {
+      display: flex;
+      gap: 3px;
+      height: 2px;
+      margin-bottom: 24px;
+    }
+
+    .lightbox-deco span { display: block; height: 100%; }
+
+    .lightbox-category {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 10px;
+    }
+
+    .lightbox-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--silver);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .lightbox-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--silver-dim);
+      line-height: 1.85;
+      letter-spacing: 0.03em;
+      flex: 1;
+    }
+
+    .lightbox-close {
+      margin-top: 28px;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      background: transparent;
+      border: 0.5px solid var(--border);
+      padding: 10px 0;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 40px;
+      background: var(--bg-deep);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-deco {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-line {
+      width: 40px; height: 0.5px;
+      background: var(--border);
+    }
+
+    footer p {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--gold-dim);
+    }
+
+    footer a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      text-decoration: none;
+      transition: color 0.35s ease;
+    }
+
+    footer a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .lightbox-inner { grid-template-columns: 1fr; }
+      .lightbox-info { border-left: none; border-top: 0.5px solid var(--border); }
+      .lightbox-img { aspect-ratio: 16 / 9; }
+      .lightbox-img-placeholder { aspect-ratio: 16 / 9; }
+    }
+
+    @media (max-width: 540px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      nav { gap: 16px; }
+      .filter-bar { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="background.html">Background</a>
+    <a href="projects.html" class="active">Art &amp; Projects</a>
+    <a href="https://sovereigngridinitiative.org" target="_blank" rel="noopener" class="external">Sovereign Grid</a>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener" class="external">LinkedIn</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="deco-bar">
+        <span style="background:var(--gold);flex:3"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:1"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:3"></span>
+      </div>
+      <div class="deco-ornament">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+      <h1 class="page-title">Art &amp; Projects</h1>
+      <p class="page-subtitle">What I make and why I make it</p>
+      <div class="deco-ornament-bottom">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+    <button class="filter-btn" onclick="filterGallery('leather', this)">Leather</button>
+    <button class="filter-btn" onclick="filterGallery('woodworking', this)">Woodworking</button>
+    <button class="filter-btn" onclick="filterGallery('painting', this)">Painting</button>
+    <button class="filter-btn" onclick="filterGallery('bookbinding', this)">Bookbinding</button>
+    <button class="filter-btn" onclick="filterGallery('drawing', this)">Drawing</button>
+    <button class="filter-btn" onclick="filterGallery('digital', this)">Digital</button>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-section">
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="gallery-card" data-category="leather" onclick="openLightbox('Leather Journal Cover', 'Leather', 'Hand-tooled leather journal cover. The design came first — the geometry of it, the way the lines would catch light differently depending on the angle. The leather was chosen to serve the design, not the other way around.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Leather</div>
+          <div class="card-title">Journal Cover</div>
+          <div class="card-desc">Hand-tooled leather with geometric inlay.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="woodworking" onclick="openLightbox('Walnut Shelf', 'Woodworking', 'A wall-mounted walnut shelf built with hand-cut dovetail joints. No hardware visible from the front. The brief was simple — something that looks like it belongs, not like it was assembled.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Woodworking</div>
+          <div class="card-title">Walnut Shelf</div>
+          <div class="card-desc">Hand-cut dovetail joints, no visible hardware.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="painting" onclick="openLightbox('Study in Charcoal and Gold', 'Painting', 'A large-format canvas piece working through ideas about contrast — what is visible at the edges of things versus what hides in the center. Charcoal base with gold leaf detail.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Painting</div>
+          <div class="card-title">Study in Charcoal and Gold</div>
+          <div class="card-desc">Large-format canvas with gold leaf detail.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="bookbinding" onclick="openLightbox('Coptic Bound Notebook', 'Bookbinding', 'A Coptic-stitch bound notebook with exposed spine. The binding structure is part of the design — the thread pattern on the spine is as considered as anything else about the object.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Bookbinding</div>
+          <div class="card-title">Coptic Bound Notebook</div>
+          <div class="card-desc">Exposed spine Coptic stitch, linen thread.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="leather" onclick="openLightbox('Bifold Wallet', 'Leather', 'Minimalist bifold in vegetable-tanned leather. Four card slots, one bill compartment. Designed to be thinner than anything you can buy — which required thinking about the order of assembly more than the stitching.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Leather</div>
+          <div class="card-title">Bifold Wallet</div>
+          <div class="card-desc">Vegetable-tanned, hand-stitched, minimal profile.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="drawing" onclick="openLightbox('Architectural Study', 'Drawing', 'A series of ink studies of structural forms — arches, vaults, load-bearing joints. Started as technical reference and became something else. The interest isn\'t in accuracy, it\'s in understanding how weight moves through a structure.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Drawing</div>
+          <div class="card-title">Architectural Study</div>
+          <div class="card-desc">Ink studies of structural forms and load paths.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="woodworking" onclick="openLightbox('Oak Writing Desk', 'Woodworking', 'A solid white oak writing desk built for daily use. The top is a single slab. The legs are tapered by hand. The brief was something that would outlast its owner — which changes how you think about every joint.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Woodworking</div>
+          <div class="card-title">Oak Writing Desk</div>
+          <div class="card-desc">Single slab white oak, hand-tapered legs.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="painting" onclick="openLightbox('Field Study No. 3', 'Painting', 'One of a series of small-format oil studies done outdoors. The goal wasn\'t to capture a place but to capture a quality of light at a specific time. The location is secondary. The light is the subject.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Painting</div>
+          <div class="card-title">Field Study No. 3</div>
+          <div class="card-desc">Small-format oil, outdoor light study.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card" data-category="digital" onclick="openLightbox('Sovereign Grid Initiative', 'Digital', 'The Sovereign Grid Initiative is a community-led energy resilience project built from the ground up. This is the digital work — architecture, design, and build. The project has its own home at sovereigngridinitiative.org.', '')">
+        <div class="card-img-wrap">
+          <div class="card-img-placeholder">
+            <div class="placeholder-icon"></div>
+            <div class="placeholder-text">Add image</div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-category">Digital</div>
+          <div class="card-title">Sovereign Grid Initiative</div>
+          <div class="card-desc">Community energy resilience platform.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lightbox-inner" id="lightboxInner">
+      <div id="lightboxImgWrap">
+        <div class="lightbox-img-placeholder" id="lightboxPlaceholder">
+          <div style="text-align:center">
+            <div style="width:40px;height:40px;border:0.5px solid var(--gold-dim);transform:rotate(45deg);margin:0 auto 12px;"></div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);">No image yet</div>
+          </div>
+        </div>
+      </div>
+      <div class="lightbox-info">
+        <div>
+          <div class="lightbox-deco">
+            <span style="background:var(--gold);flex:3"></span>
+            <span style="background:var(--gold-dim);flex:1"></span>
+            <span style="background:var(--gold);flex:1"></span>
+            <span style="background:var(--gold-dim);flex:1"></span>
+            <span style="background:var(--gold);flex:3"></span>
+          </div>
+          <div class="lightbox-category" id="lightboxCategory"></div>
+          <div class="lightbox-title" id="lightboxTitle"></div>
+          <div class="lightbox-desc" id="lightboxDesc"></div>
+        </div>
+        <button class="lightbox-close" onclick="closeLightbox()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+    <p>&copy; Paul Alderson 2026</p>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+  </footer>
+
+  <script>
+    function openLightbox(title, category, desc, imgSrc) {
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxCategory').textContent = category;
+      document.getElementById('lightboxDesc').textContent = desc;
+      var wrap = document.getElementById('lightboxImgWrap');
+      if (imgSrc) {
+        wrap.innerHTML = '<img class="lightbox-img" src="' + imgSrc + '" alt="' + title + '">';
+      } else {
+        wrap.innerHTML = '<div class="lightbox-img-placeholder"><div style="text-align:center"><div style="width:40px;height:40px;border:0.5px solid var(--gold-dim);transform:rotate(45deg);margin:0 auto 12px;"></div><div style="font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);">No image yet</div></div></div>';
+      }
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBg(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    function filterGallery(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.gallery-card').forEach(function(card) {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
