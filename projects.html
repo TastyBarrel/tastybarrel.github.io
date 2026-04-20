@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art &amp; Projects — Paul Alderson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary:   #161410;
+      --bg-deep:      #0e0c0a;
+      --bg-card:      #1a1814;
+      --silver:       #c0c0c0;
+      --silver-muted: #909090;
+      --silver-dim:   #585858;
+      --gold:         #c9a84c;
+      --gold-dim:     #6a5520;
+      --gold-faint:   #2a2010;
+      --border:       #2a2418;
+      --border-light: #1e1a10;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--silver);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 18px 40px;
+      background: rgba(10, 8, 6, 0.92);
+      border-bottom: 0.5px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--silver-muted);
+      text-decoration: none;
+      transition: color 0.35s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { transform: scaleX(1); }
+    nav a.active { color: var(--gold); }
+    nav a.active::after { transform: scaleX(1); }
+
+    nav .external::after { content: ''; }
+    nav .external:hover { color: var(--gold); }
+    nav .external:hover::after { transform: scaleX(1); }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+      pointer-events: none;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 1s ease forwards 0.2s;
+      max-width: 560px;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .deco-bar {
+      display: flex;
+      gap: 3px;
+      width: 200px;
+      height: 3px;
+      margin: 0 auto 36px;
+    }
+    .deco-bar span { display: block; height: 100%; }
+
+    .deco-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .deco-line {
+      width: 80px; height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .deco-line.r { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+    .deco-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .deco-diamond.sm { width: 3px; height: 3px; opacity: 0.5; }
+
+    .page-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(52px, 7vw, 72px);
+      color: var(--silver);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .coming-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      display: inline-block;
+      border: 0.5px solid var(--gold-dim);
+      padding: 6px 20px;
+    }
+
+    .deco-ornament-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .coming-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-style: italic;
+      color: var(--silver-muted);
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      margin-bottom: 48px;
+    }
+
+    .back-link {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      text-decoration: none;
+      border: 0.5px solid var(--border);
+      padding: 12px 32px;
+      display: inline-block;
+      transition: all 0.35s ease;
+    }
+
+    .back-link:hover {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 40px;
+      background: var(--bg-deep);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-deco {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-line {
+      width: 40px; height: 0.5px;
+      background: var(--border);
+    }
+
+    footer p {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--gold-dim);
+    }
+
+    footer a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      text-decoration: none;
+      transition: color 0.35s ease;
+    }
+
+    footer a:hover { color: var(--gold); }
+
+    @media (max-width: 680px) {
+      nav { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="background.html">Background</a>
+    <a href="projects.html" class="active">Art &amp; Projects</a>
+    <a href="https://sovereigngridinitiative.org" target="_blank" rel="noopener" class="external">Sovereign Grid</a>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener" class="external">LinkedIn</a>
+  </nav>
+
+  <main>
+    <div class="inner">
+      <div class="deco-bar">
+        <span style="background:var(--gold);flex:3"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:1"></span>
+        <span style="background:var(--gold-dim);flex:1"></span>
+        <span style="background:var(--gold);flex:3"></span>
+      </div>
+
+      <div class="deco-ornament">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+
+      <h1 class="page-title">Art &amp; Projects</h1>
+
+      <div class="deco-ornament-bottom">
+        <div class="deco-line"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-diamond sm"></div>
+        <div class="deco-line r"></div>
+      </div>
+
+      <div class="coming-label">Coming Soon</div>
+
+      <p class="coming-text">
+        This gallery is being assembled. Leather, wood, paint, canvas —
+        the work is there. The page is on its way.
+      </p>
+
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+    <p>&copy; Paul Alderson 2026</p>
+    <a href="https://www.linkedin.com/in/paul-alderson-b3333348" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="footer-deco">
+      <div class="footer-line"></div>
+      <div class="deco-diamond" style="width:4px;height:4px;background:var(--gold-dim);transform:rotate(45deg)"></div>
+      <div class="footer-line"></div>
+    </div>
+  </footer>
+
+</body>
+</html>
